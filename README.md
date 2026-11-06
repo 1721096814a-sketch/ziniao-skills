@@ -55,10 +55,6 @@ python -I -m pip install --target (Join-Path $SkillRoot "ziniao-store-login/vend
 
 IEN 技能已将登录技能作为前置。其他店铺业务技能也可按 [统一交接契约](skills/ziniao-store-login/references/upstream-contract.md) 接入：先以内部 `entryMode=ensure_session` 确保登录，已登录则直接复用，未登录统一处理。`entryMode` 是 Agent 交接字段，不是 CLI 参数。
 
-若要让今后开发的所有店铺业务技能都遵从这一前置，可在自己的全局指令中加入：
-
-> 所有紫鸟店铺网页业务技能先使用 ziniao-store-login，按其 references/upstream-contract.md 检查目标登录状态，传入真实业务用途、断点和当次限制；成功并核对身份后进入业务。新建或修改技能时也应加入这个前置。
-
 ## 操作规则
 
 - 网站只读同源请求串行执行，响应后间隔1–3秒。
