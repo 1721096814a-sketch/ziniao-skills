@@ -1,5 +1,7 @@
 # Personal data and run checkpoints
 *.xls
+# User-authorized workbook for this private repository
+!/skills/ziniao-store-login/assets/验证码请求飞书.xls
 *.xlsx
 *.csv
 *.pdf

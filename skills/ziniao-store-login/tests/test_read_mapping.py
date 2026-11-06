@@ -1,6 +1,9 @@
 """Offline checks: catch wrong-recipient matches and incomplete mappings."""
 import importlib.util
+import json
 import pathlib
+import subprocess
+import sys
 import unittest
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -62,10 +65,19 @@ class MappingTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.mapping.resolve_mapping(rows, "1号机美国")
 
+    def test_default_cli_reads_bundled_workbook(self):
+        result = subprocess.run(
+            [sys.executable, "-I", "-X", "utf8", str(SCRIPT), "--list"],
+            capture_output=True, encoding="utf-8", timeout=30,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        data = json.loads(result.stdout)
+        self.assertEqual(pathlib.Path(data["workbook"]), ROOT / "assets" / "验证码请求飞书.xls")
+        self.assertGreater(data["data"]["count"], 0)
+
     def test_workbook_can_be_read_without_changes(self):
-        path = pathlib.Path(r"D:\共享\验证码请求飞书.xls")
-        if not path.exists():
-            self.skipTest("User workbook is not present on this machine")
+        path = ROOT / "assets" / "验证码请求飞书.xls"
+        self.assertTrue(path.is_file(), "Private contact workbook must be bundled with the skill")
         before = path.read_bytes()
         rows, digest = self.mapping.read_workbook(path)
         self.assertEqual(path.read_bytes(), before)

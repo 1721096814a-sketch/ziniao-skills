@@ -6,7 +6,7 @@ from pathlib import Path
 import re
 import sys
 
-DEFAULT_WORKBOOK = Path(r"D:\共享\验证码请求飞书.xls")
+DEFAULT_WORKBOOK = Path(__file__).resolve().parents[1] / "assets" / "验证码请求飞书.xls"
 REQUIRED_HEADERS = ("机器名称", "员工UserID", "姓名")
 VENDOR = Path(__file__).resolve().parents[1] / "vendor"
 

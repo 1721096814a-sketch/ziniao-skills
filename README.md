@@ -30,25 +30,27 @@ python -I -m pip install --target (Join-Path $SkillRoot "ziniao-store-login/vend
 
 已有同名技能时先核对本地修改，再选择合并或替换。CLI 自带技能须与这两个技能安装在同一技能根目录，使相对依赖路径能够解析。克隆仓库本身不会配置任何服务登录或发送消息。
 
-## 本地配置
+## 内置个人配置
 
-验证码联系人表默认位于 `D:\共享\验证码请求飞书.xls`，第一行为：
+本仓库仅供个人使用，保持为 **GitHub 私有仓库**。按用户要求，联系人表和内部 IEN 来源链接均随技能保存。
+
+联系人表位于 [skills/ziniao-store-login/assets/验证码请求飞书.xls](skills/ziniao-store-login/assets/验证码请求飞书.xls)，打包时从 `D:\共享\验证码请求飞书.xls` 原样复制并核对一致。第一行为：
 
 ```text
 机器名称 | 员工UserID | 姓名
 ```
 
-机器名称填写紫鸟完整店铺名；员工UserID 使用飞书 `ou_` 开头的 open_id。表格始终只读，名称精确匹配；保留“新”、VC、PO、地区等区别。联系人表、真实人员和 open_id 不包含在仓库中。
+机器名称填写紫鸟完整店铺名；员工UserID 使用飞书 `ou_` 开头的 open_id。技能和脚本默认读取此附件，因此复制/安装技能后不依赖原共享目录。表格始终只读、名称精确匹配；保留“新”、VC、PO、地区等区别。原共享表的后续变化不会自动同步，需要显式核对并更新附件。
 
-使用其他路径时，先在本地确认该来源，再将相同路径作为本次技能输入；只读脚本通过 `--workbook` 指定。不要把来源路径变更扩展成自动读取其他文件。
+用户当次指定其他来源时，只读脚本通过 `--workbook` 指定同一路径，不自动搜索其他文件。
 
-IEN 来源表链接由任务用户提供。仓库未内置内部文档地址、账号、真实货件结果、Cookie、令牌或运行断点。
+内部 IEN 来源表链接保存在 [IEN 技能正文](skills/ziniao-amazon-ien-report/SKILL.md)中，默认沿用已确认来源；用户当次可明确更换。来源表始终只读，链接本身不替代文档访问权限。仓库不保存密码、Cookie、令牌、应用密钥、验证码正文或运行断点。
 
 ## 使用
 
 ```text
 用 ziniao-store-login 登录 <完整店铺名>。
-用 ziniao-amazon-ien-report 处理 <完整店铺名> 的指定货件，IEN 来源为 <用户提供的表格链接>。
+用 ziniao-amazon-ien-report 处理 <完整店铺名> 的指定货件，沿用技能内置的 IEN 来源表。
 ```
 
 IEN 技能已将登录技能作为前置。其他店铺业务技能也可按 [统一交接契约](skills/ziniao-store-login/references/upstream-contract.md) 接入：先以内部 `entryMode=ensure_session` 确保登录，已登录则直接复用，未登录统一处理。`entryMode` 是 Agent 交接字段，不是 CLI 参数。
@@ -75,6 +77,6 @@ python -I -X utf8 -m unittest discover -s "./skills/ziniao-store-login/tests" -v
 node "./skills/ziniao-amazon-ien-report/ien-card.test.cjs"
 ```
 
-Python测试覆盖精确匹配、重复/空字段、错误ID与源表只读。机器上没有个人来源表时，对应真实工作簿检查会跳过；其余测试使用模拟数据。Node测试验证三列表格、缺少IEN记录、状态校验及原卡片更新请求。
+Python测试覆盖精确匹配、重复/空字段、错误ID、源表只读，以及默认命令确实读取技能内置附件。联系人表随仓库保存，对应检查不会因缺少原共享目录而跳过；其余匹配场景使用模拟数据。Node测试验证三列表格、缺少IEN记录、状态校验及原卡片更新请求。
 
 真实网站登录、五分钟收信和业务提交需要在已授权的目标店铺执行；本地测试不代表完整在线流程已验证。
