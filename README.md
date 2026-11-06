@@ -32,7 +32,7 @@ python -I -m pip install --target (Join-Path $SkillRoot "ziniao-store-login/vend
 
 ## 内置个人配置
 
-本仓库仅供个人使用，保持为 **GitHub 私有仓库**。按用户要求，联系人表和内部 IEN 来源链接均随技能保存。
+本仓库用于个人技能同步，按用户要求设为 **GitHub 公开仓库**，可直接克隆。联系人表和内部 IEN 来源链接均随技能保存，仓库内容可被任何人查看和下载。
 
 联系人表位于 [skills/ziniao-store-login/assets/验证码请求飞书.xls](skills/ziniao-store-login/assets/验证码请求飞书.xls)，打包时从 `D:\共享\验证码请求飞书.xls` 原样复制并核对一致。第一行为：
 
