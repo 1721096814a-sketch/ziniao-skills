@@ -1,0 +1,26 @@
+# Personal data and run checkpoints
+*.xls
+*.xlsx
+*.csv
+*.pdf
+*.docx
+*.log
+.env
+.env.*
+login-run-state/
+ien-run-state/
+**/login-run-state/
+**/ien-run-state/
+output/
+raw/
+.local/
+
+# Local dependencies and caches
+vendor/
+**/vendor/
+__pycache__/
+*.py[cod]
+.venv/
+node_modules/
+.DS_Store
+Thumbs.db
